@@ -1,8 +1,25 @@
+'use client'
 import Image from "next/image";
 import React from "react";
 import Button from "@mui/material/Button";
+import { useDispatch, } from "react-redux";
+
 
 const Cards = ({ data }) => {
+
+  const dispatch = useDispatch()
+
+  const addItemToCart = ({ id, name, price, quantity, image }) => {
+    const cartItem = {
+      id: id,
+      name: name,
+      price: price,
+      quantity: quantity,
+      image: image,
+    };
+    // dispatch(addToCart(cartItem));
+  
+  };
   return (
     <>
       {data.map((items, index) => (
@@ -10,10 +27,16 @@ const Cards = ({ data }) => {
           <Image src={items.image} width={500} height={250} alt="dkl" />
 
           <div>
-            <p>{items.title}</p>
+            <p>{items.title || ''}</p>
             <span>price:{items.price}</span>
           </div>
-          <Button variant="contained" className="bg-[#f04f72]">
+          <Button variant="contained" className="bg-[#f04f72]" onClick={  addItemToCart({
+                              id: items.title.toLowerCase() + "-" + index,
+                              name: items.title,
+                              price: items.price,
+                              quantity: 1,
+                              image: items.image,
+                            })}>
             Buy Now
           </Button>
         </div>

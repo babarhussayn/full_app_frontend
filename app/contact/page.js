@@ -1,8 +1,10 @@
 "use client";
+import { postData } from "@/api/services";
 import Navbar from "@/components/Navbar";
 import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
-
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Contact = () => {
   const [formValue, setFormValue] = useState({
     name: "",
@@ -12,22 +14,44 @@ const Contact = () => {
     message: "",
   });
 
-  function handleSubmit(e){
+
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    setFormValue(formValue);
-    console.log(formValue,'value')
+    const sendValues = { ...formValue };
+  setFormValue({email:'', phone:'', address:'', message:'',name:''})
+    try {
+      const response = await postData("contact/sendmessage", sendValues);
+
+      if (response.status) {
+
+        const user = {
+          email: response.user?.email || "",
+          address: response.user?.address || "",
+          name: response.user?.name || "",
+          phone:response.user?.phone || "",
+          message:response.user?.message || ""
+        };
+        toast.success(response.message);
+      return user;
+      } else {
+      toast.error(response.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  
   }
 
   const handleChange = (e) => {
     e.preventDefault();
 
-    const {value,name} = e.target;
+    const { value, name } = e.target;
     setFormValue((prevFormValue) => ({
-        ...prevFormValue,
-        [name]: value,  
-      }));
-      console.log(value);
+      ...prevFormValue,
+      [name]: value,
+    }));
+    console.log(value);
   };
 
   return (
@@ -43,20 +67,19 @@ const Contact = () => {
                   value={formValue.name}
                   onChange={handleChange}
                   placeholder="Name"
-                  
                   required
                 />
-              
-              <div>
-                <TextField
-                  name="email"
-                  value={formValue.email}
-                  onChange={handleChange}
-                  placeholder="Email"
-                  type="email"
-                  required
-                />
-              </div>
+
+                <div>
+                  <TextField
+                    name="email"
+                    value={formValue.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    type="email"
+                    required
+                  />
+                </div>
               </div>
               <div className="flex justify-between items-center gap-6">
                 <TextField
@@ -66,20 +89,18 @@ const Contact = () => {
                   placeholder="Phone Number"
                   type="number"
                   required
-                  
                 />
-              
-              <div>
-                <TextField
-                  name="address"
-                  value={formValue.address}
-                  onChange={handleChange}
-                  
-                  placeholder="Country"
-                  type="text"
-                  required
-                />
-              </div>
+
+                <div>
+                  <TextField
+                    name="address"
+                    value={formValue.address}
+                    onChange={handleChange}
+                    placeholder="Country"
+                    type="text"
+                    required
+                  />
+                </div>
               </div>
               <div>
                 <TextField
@@ -92,7 +113,14 @@ const Contact = () => {
                   fullWidth
                 />
               </div>
-              <Button variant="contained" className="bg-[#f04f72]" type="submit">Send</Button>
+              <Button
+                variant="contained"
+                className="bg-[#f04f72]"
+                type="submit"
+              >
+                Send
+              </Button>
+              <ToastContainer/>
             </div>
           </form>
         </div>
