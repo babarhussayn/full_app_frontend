@@ -74,6 +74,7 @@ const Contact = () => {
                   name="address"
                   value={formValue.address}
                   onChange={handleChange}
+                  
                   placeholder="Country"
                   type="text"
                   required
