@@ -3,14 +3,15 @@ import Navbar from '@/components/Navbar';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { decreaseQuantity, increaseQuantity, removeFromCart } from '@/store/store'; // Ensure these actions are defined in your slice
-
+import { Button } from '@mui/material';
+import { useRouter } from 'next/navigation';
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.app.cart);
 
   // Calculate total price
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-
+   const router = useRouter()
   return (
     <>
       <Navbar />
@@ -79,6 +80,11 @@ const Cart = () => {
           ) : (
             <span>Your cart is empty</span>
           )}
+        </div>
+        <div>
+          <Button sx={{backgroundColor:'#d9cf6f'}} onClick={()=>{router.push('/checkout')}}>
+            Checkout
+          </Button>
         </div>
       </div>
     </>

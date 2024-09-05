@@ -4,7 +4,8 @@ import React from "react";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/store"; // Ensure you import the correct action
-
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Cards = ({ data }) => {
   const dispatch = useDispatch();
 
@@ -31,17 +32,21 @@ const Cards = ({ data }) => {
           </div>
           <Button 
             variant="contained" 
-            className="bg-[#f04f72]" 
-            onClick={() => addItemToCart({
+          
+            sx={{backgroundColor:'#f04f72'}}
+            onClick={() =>{ addItemToCart({
               id: items.title.toLowerCase() + "-" + index,
               name: items.title,
               price: items.price,
               quantity: 1,
               image: items.image,
-            })}
+            })
+            toast.success(" added to cart")
+             }}
           >
             Buy Now
           </Button>
+          <ToastContainer/>
         </div>
       ))}
     </>

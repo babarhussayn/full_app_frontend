@@ -1,6 +1,10 @@
+'use client'
+
 import Link from 'next/link';
 import React from 'react'
- 
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useRouter } from 'next/navigation';
+import { Button } from '@mui/material';
 
 
 const navbar=[
@@ -24,6 +28,7 @@ const navbar=[
 ]
 
 const Navbar=()=>{
+    const router= useRouter()
 return(
 
 <>
@@ -35,6 +40,12 @@ return(
                 <Link href={item.link}>{item.name}</Link> 
             </p>
             ))}
+
+<p   onClick={()=>router.push('/cart')} className='cursor-pointer'>
+<ShoppingCartIcon className='text-white' fontSize='large' />
+</p>
+
+            
     </div>
 </div>
 
