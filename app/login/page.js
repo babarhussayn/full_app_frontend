@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '@/components/Navbar';
 import { useDispatch } from 'react-redux';
-import { login } from '@/store/slices/authSlice';
+import { setUser } from '@/store/store';
 import { useRouter } from 'next/navigation';
 
 const Login = () => {
@@ -34,10 +34,11 @@ const Login = () => {
       if (response.status) {
         
         const user = {
+          name:response.user.name,
           email: response.user.email,
           id: response.user._id,
         };
-          dispatch(login(user));
+        dispatch(setUser(user))
         toast.success(response.message);
         router.push('/')
         return user;
