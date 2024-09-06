@@ -69,8 +69,8 @@ const Cart = () => {
                     Total: £{cartTotal.toFixed(2)}
                   </h2>
                   <button
-                    className="bg-primary text-white p-2 rounded-md hover:bg-transparent border-2 border-primary hover:text-primary hover:border-2 hover:border-primary"
-                    // onClick={() => router.push("/checkout")}
+                    className="bg-primary text-black p-2 rounded-md hover:bg-transparent border-2 border-primary hover:text-primary hover:border-2 hover:border-primary"
+                    onClick={() => router.push("/checkout")}
                   >
                     Proceed to Checkout
                   </button>
@@ -81,11 +81,11 @@ const Cart = () => {
             <span>Your cart is empty</span>
           )}
         </div>
-        <div>
+        {/* <div>
           <Button sx={{backgroundColor:'#d9cf6f'}} onClick={()=>{router.push('/checkout')}}>
             Checkout
           </Button>
-        </div>
+        </div> */}
       </div>
     </>
   );
